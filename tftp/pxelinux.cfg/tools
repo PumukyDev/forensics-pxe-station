@@ -1,0 +1,21 @@
+MENU BEGIN tools
+MENU TITLE System Diagnostics and Tools
+
+MENU SEPARATOR
+
+LABEL memtest32
+    MENU LABEL ^1. Memtest 32-bit (i386)
+    KERNEL memtest/memtest32.bin
+
+LABEL memtest64
+    MENU LABEL ^2. Memtest 64-bit (x86_64)
+    KERNEL memtest/memtest64.bin
+
+# Linea separadora
+MENU SEPARATOR
+
+LABEL back
+    MENU LABEL ^Return to Main Menu
+    MENU GOTO default
+
+MENU END

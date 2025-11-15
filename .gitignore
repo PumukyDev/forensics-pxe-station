@@ -1,3 +1,4 @@
 .vagrant/
 http/
-tftp/
+tftp/*
+!tftp/pxelinux.cfg/
