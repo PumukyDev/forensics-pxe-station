@@ -1,28 +1,25 @@
 services:
 
-  # 1. SERVIDOR DNSMASQ (DHCP y TFTP para archivos pequeños)
   pxe-dnsmasq:
-    image: ferrarimarco/pxe
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: pxe-dnsmasq
-    # Necesita network_mode: host para manejar las peticiones DHCP en vboxnet0
     network_mode: host
-    # Necesita NET_ADMIN para gestionar las interfaces de red (DHCP)
     cap_add:
       - NET_ADMIN
     volumes:
-      # Monta la carpeta tftpboot en modo solo lectura (ro)
-      - ./tftpboot:/var/lib/tftpboot:ro
-    # El comando que define el rango DHCP
+      - ./config/dnsmasq/dnsmasq.conf:/etc/dnsmasq.conf:ro
+      - ./config/dnsmasq/default/dnsmasq:/etc/default/dnsmasq:ro
+      - ./tftp:/var/lib/tftpboot:ro
     command: --dhcp-range=192.168.56.10,192.168.56.100,255.255.255.0
+    restart: unless-stopped
 
-  # 2. SERVIDOR HTTP (Para servir el archivo grande de Kali)
-# 2. SERVIDOR HTTP (Usando Nginx para mejor manejo de archivos grandes)
   http-server:
-    image: nginx:alpine  # Usamos una imagen ligera de NGINX
+    image: nginx:alpine
     container_name: http-server
-    # NGINX sirve el contenido desde /usr/share/nginx/html
     volumes:
-      - ./tftpboot/kali:/usr/share/nginx/html:ro # Montamos la carpeta 'kali'
+      - ./http:/usr/share/nginx/html:ro
     ports:
-      - "8080:80"  # Mantenemos el puerto 8080 en el host
+      - "8080:80"
     restart: unless-stopped
