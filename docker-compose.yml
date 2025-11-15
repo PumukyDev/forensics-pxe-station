@@ -1,22 +1,28 @@
 services:
-  dhcp:
-    build: ./dnsmasq
-    container_name: dhcp-server
-    networks:
-      dhcp_net:
-        ipv4_address: 192.168.50.2
+
+  # 1. SERVIDOR DNSMASQ (DHCP y TFTP para archivos pequeños)
+  pxe-dnsmasq:
+    image: ferrarimarco/pxe
+    container_name: pxe-dnsmasq
+    # Necesita network_mode: host para manejar las peticiones DHCP en vboxnet0
+    network_mode: host
+    # Necesita NET_ADMIN para gestionar las interfaces de red (DHCP)
     cap_add:
       - NET_ADMIN
     volumes:
-      - ./dnsmasq/dnsmasq.conf:/etc/dnsmasq.conf
-    restart: unless-stopped
+      # Monta la carpeta tftpboot en modo solo lectura (ro)
+      - ./tftpboot:/var/lib/tftpboot:ro
+    # El comando que define el rango DHCP
+    command: --dhcp-range=192.168.56.10,192.168.56.100,255.255.255.0
 
-networks:
-  dhcp_net:
-    driver: macvlan
-    driver_opts:
-      parent: vboxnet2
-    ipam:
-      config:
-        - subnet: 192.168.50.0/24
-          gateway: 192.168.50.1
+  # 2. SERVIDOR HTTP (Para servir el archivo grande de Kali)
+# 2. SERVIDOR HTTP (Usando Nginx para mejor manejo de archivos grandes)
+  http-server:
+    image: nginx:alpine  # Usamos una imagen ligera de NGINX
+    container_name: http-server
+    # NGINX sirve el contenido desde /usr/share/nginx/html
+    volumes:
+      - ./tftpboot/kali:/usr/share/nginx/html:ro # Montamos la carpeta 'kali'
+    ports:
+      - "8080:80"  # Mantenemos el puerto 8080 en el host
+    restart: unless-stopped
