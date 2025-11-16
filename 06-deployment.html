@@ -247,6 +247,48 @@ sudo<span class="w"> </span>./provision.sh
 </pre></div>
 </div>
 <p><img alt="Provision" src="_images/provision.png" /></p>
+<p>After provision, your directory tree must look like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> forensics-pxe-station git:(main) ❯ tree
+.
+├── config
+│   └── dnsmasq
+│       ├── default
+│       │   └── dnsmasq
+│       └── dnsmasq.conf
+├── docker-compose.yml
+├── Dockerfile
+├── docs
+│   └── ...
+├── http
+│   ├── kali-linux-2025.3-live-amd64.iso
+│   └── tails-amd64-7.2.img
+├── LICENSE
+├── provision.sh
+├── README.md
+├── tftp
+│   ├── chain.c32
+│   ├── kali
+│   │   ├── initrd.img
+│   │   └── vmlinuz
+│   ├── ldlinux.c32
+│   ├── libcom32.c32
+│   ├── libutil.c32
+│   ├── memtest
+│   │   ├── memtest32.bin
+│   │   └── memtest64.bin
+│   ├── menu.c32
+│   ├── pxelinux.0
+│   ├── pxelinux.cfg
+│   │   ├── default
+│   │   └── tools
+│   └── tails
+│       ├── initrd.img
+│       └── vmlinuz
+└── Vagrantfile
+
+13 directories, 41 files
+</pre></div>
+</div>
 <p><strong>Docker Compose Up:</strong> The two container services are launched.</p>
 <ul class="simple">
 <li><p>pxe-dnsmasq starts listening on port 67 (DHCP) and 69 (TFTP).</p></li>
