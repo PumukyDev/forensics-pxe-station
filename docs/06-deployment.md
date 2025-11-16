@@ -11,6 +11,50 @@ sudo ./provision.sh
 
 ![Provision](assets/deployment/provision.png)
 
+After provision, your directory tree must look like this:
+
+```
+ forensics-pxe-station git:(main) ❯ tree
+.
+├── config
+│   └── dnsmasq
+│       ├── default
+│       │   └── dnsmasq
+│       └── dnsmasq.conf
+├── docker-compose.yml
+├── Dockerfile
+├── docs
+│   └── ...
+├── http
+│   ├── kali-linux-2025.3-live-amd64.iso
+│   └── tails-amd64-7.2.img
+├── LICENSE
+├── provision.sh
+├── README.md
+├── tftp
+│   ├── chain.c32
+│   ├── kali
+│   │   ├── initrd.img
+│   │   └── vmlinuz
+│   ├── ldlinux.c32
+│   ├── libcom32.c32
+│   ├── libutil.c32
+│   ├── memtest
+│   │   ├── memtest32.bin
+│   │   └── memtest64.bin
+│   ├── menu.c32
+│   ├── pxelinux.0
+│   ├── pxelinux.cfg
+│   │   ├── default
+│   │   └── tools
+│   └── tails
+│       ├── initrd.img
+│       └── vmlinuz
+└── Vagrantfile
+
+13 directories, 41 files
+```
+
 **Docker Compose Up:** The two container services are launched.
 
 - pxe-dnsmasq starts listening on port 67 (DHCP) and 69 (TFTP).
