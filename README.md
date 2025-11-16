@@ -54,7 +54,7 @@ vagrant up
 
 ## Documentation
 
-You can view the full project documentation in [PDF](https://github.com/PumukyDev/forensics-pxe-station/blob/gh-pages/ebook.pdf) or the [web page version](https://pumukydev.github.io/forensics-pxe-station)
+You can view the full project documentation in the [web page version](https://pumukydev.github.io/forensics-pxe-station)
 
 ## License
 
