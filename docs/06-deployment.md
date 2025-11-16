@@ -41,7 +41,4 @@ vagrant up
 
 The following video provides a visual walkthrough of the entire deployment process, from launching the containers to the final successful boot of Kali Linux via PXE:
 
-<video controls>
-  <source src="pxe-demo.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+[![Watch the video](assets/deployment/pxe-demo.png)](https://youtu.be/QsZuQQd7NHc)
